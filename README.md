@@ -2,6 +2,10 @@
 
 MDSI - Advanced Data Science for Innovation - February 2021 - Assessment Task 01
 
+## Kaggle
+
+Site: [[UTS AdvDSI] NBA Career Prediction](https://www.kaggle.com/c/uts-advdsi-nba-career-prediction/overview)
+
 ## Command to set up repo
 
 Main Command:
