@@ -13,6 +13,7 @@ joblib = "*"
 scipy = "*"
 sklearn = "*"
 kaggle = "*"
+imblearn = "*"
 
 [dev-packages]
 
