@@ -742,7 +742,7 @@ clf = RandomizedSearchCV    ( estimator=reg
     )
 
 # Search for results
-res = clf.fit(feat, targ)
+res = clf.fit(trn_feat, targ)
 
 # Check best params
 print(res.best_params_)
