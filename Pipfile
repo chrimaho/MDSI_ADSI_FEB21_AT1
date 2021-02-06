@@ -17,6 +17,7 @@ imblearn = "*"
 pytictoc = "*"
 jupyter = "*"
 lab = "*"
+scikit-plot = "*"
 
 [dev-packages]
 

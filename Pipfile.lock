@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6ed785267120df15d19dbb4ba1b6e2ba3247c80d10c4685e3670a5a3bd95d52d"
+            "sha256": "ae93fead9dcddaa8308046de3f3227a7936cd8c910455e5afe7deea24d3aa125"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -337,11 +337,11 @@
         },
         "jupyter-server": {
             "hashes": [
-                "sha256:26a98cd5c45b8ebd1e10215586c350a8fa3ca2971e757ee6bf517a180f9933ae",
-                "sha256:49fd3f9f6f4e866c2b8d7494baa2b6e6a7e44236006e443f2c04c407f7f55918"
+                "sha256:ae992e84f9ce38af804b5487e44ec5fd10f60d0d4c79a40eb46d66697b7cea89",
+                "sha256:b9d32d102df25f66ec3c1fe508c62cd0c856123452d973741da84fee4be01912"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==1.2.2"
+            "version": "==1.3.0"
         },
         "jupyterlab": {
             "hashes": [
@@ -360,11 +360,11 @@
         },
         "jupyterlab-server": {
             "hashes": [
-                "sha256:00de1aebf08d597de801d0da74edd121e27adad38f9906995a5a419f3e93683d",
-                "sha256:688dee616ab89a9d5313f89da99c48abd10433a2c18a327c6e4d2b4c51707753"
+                "sha256:68b9322eee2561c89a22fcdf755c57fd750e8132f18fda81d47ca336d1f9b066",
+                "sha256:8bb220b1926a418c80869337f79096cae487ac579f304f574b970ed37c84e31c"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==2.1.4"
+            "version": "==2.2.0"
         },
         "jupyterlab-widgets": {
             "hashes": [
@@ -1038,6 +1038,14 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==0.24.1"
+        },
+        "scikit-plot": {
+            "hashes": [
+                "sha256:2c7948817fd2dc06879cfe3c1fdde56a8e71fa5ac626ffbe79f043650baa6242",
+                "sha256:6b3d529800b32a899c54dc5761a93c63cbff482b1889a4afee57dd219f3ef0c3"
+            ],
+            "index": "pypi",
+            "version": "==0.3.7"
         },
         "scipy": {
             "hashes": [
