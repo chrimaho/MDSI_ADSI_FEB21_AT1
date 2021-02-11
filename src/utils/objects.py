@@ -21,3 +21,9 @@ def check_object(obj, name, _type:bool=True, _shape:bool=True, _head:bool=True, 
         out += "\nhead: " + str(obj[:_head_size])
         
     print(out + "\n")
+    
+def str_right(string:str, num_chars:int):
+    """ Sub-Select the right-most number of characters from a string """
+    assert isinstance(string, str)
+    assert isinstance(num_chars, int)
+    return string[-num_chars:]
