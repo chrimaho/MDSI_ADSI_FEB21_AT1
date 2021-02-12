@@ -18,6 +18,9 @@ pytictoc = "*"
 jupyter = "*"
 lab = "*"
 scikit-plot = "*"
+ipykernel = "*"
+mlxtend = "*"
+lime = "*"
 
 [dev-packages]
 
