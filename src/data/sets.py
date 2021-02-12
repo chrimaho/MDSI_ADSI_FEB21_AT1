@@ -104,6 +104,8 @@ def save_sets(X_train=None, y_train=None, X_val=None, y_val=None, X_test=None, y
       np.save(f'{path}y_val',   y_val)
     if y_test is not None:
       np.save(f'{path}y_test',  y_test)
+      
+    return None
 
 def load_sets(path='../data/processed/', val=False):
     """
