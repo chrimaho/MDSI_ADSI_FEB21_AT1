@@ -21,6 +21,10 @@ scikit-plot = "*"
 ipykernel = "*"
 mlxtend = "*"
 lime = "*"
+xgboost = "*"
+hyperopt = "*"
+hpsklearn = "*"
+scikit-learn = "*"
 
 [dev-packages]
 
