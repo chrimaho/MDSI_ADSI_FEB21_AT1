@@ -15,6 +15,9 @@ sklearn = "*"
 kaggle = "*"
 imblearn = "*"
 pytictoc = "*"
+hyperas = "*"
+hpsklearn = "*"
+xgboost = "*"
 
 [dev-packages]
 
