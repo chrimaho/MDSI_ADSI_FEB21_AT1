@@ -18,6 +18,7 @@ pytictoc = "*"
 hyperas = "*"
 hpsklearn = "*"
 xgboost = "*"
+varname = "*"
 
 [dev-packages]
 
