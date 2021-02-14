@@ -3,6 +3,7 @@
 # %%
 from IPython import get_ipython
 
+
 # %% [markdown]
 # # The Future of Basketball Players
 # %% [markdown]
@@ -241,7 +242,17 @@ pred_scor = pd.DataFrame(
 
 # %%
 def get_auc(targ:np.real, pred_prob:np.real):
+    """
+    Get the ROC AUC score from a given probability distribution.
 
+    Args:
+        targ (np.real): The true classes.
+        pred_prob (np.real): The probability of the true classes.
+
+    Returns:
+        float: The calculated AUC score.
+    """
+    
     # Imports
     import numpy as np
     from sklearn.metrics import roc_curve, auc
@@ -262,7 +273,17 @@ def get_auc(targ:np.real, pred_prob:np.real):
     return roc_auc
 
 def plot_roc_curve(targ:np.real, pred_prob:np.real):
+    """
+    Plot the ROC curve from a given probability distribution.
 
+    Args:
+        targ (np.real): The true scores.
+        pred_prob (np.real): The probability of the true scores. Calculated from using the `Estimator.predict_proba(Y_val)` function.
+
+    Returns:
+        None: Nothing is returned from this function because the plot is printed.
+    """
+    
     # Imports
     import numpy as np
     from sklearn.metrics import roc_curve, auc
@@ -292,7 +313,8 @@ def plot_roc_curve(targ:np.real, pred_prob:np.real):
     # Return
     return None
 
-def save_reg_perf     ( targ:np.real
+def save_reg_perf \
+    ( targ:np.real
     , pred:np.real
     , pred_prob:np.real
     , name:str=None
@@ -888,6 +910,30 @@ def easy_random_search     ( estimator
     , print_plot:bool=True
     , print_dataframe:bool=True
     ):
+    """
+    Quickly and easily re-run the Random Search algorithm to find the optimal parameters and see the model results.
+
+    Args:
+        estimator (SkLearn_Estimator): An estimator to be used for training. Must be instantiated!
+        search_space (dict): The search space to be checked. The keys must be valid hyperparameters in the `estimator` object.
+        n_iter (int, optional): Number of times the Search Space is to be checked.. Defaults to 100.
+        cv (int, optional): Number of cross-validations to be run per iteration. Defaults to 5.
+        random_state (int, optional): The random state to be used for the `cv` splitting. Defaults to 123.
+        check_best_params (bool, optional): Whether or not to print the best params from the search space after training. Defaults to True.
+        dump_model (bool, optional): Whether or not to dump the model after training. Defaults to True.
+        dump_location (str, optional): The location where the model should be dumped to. Defaults to "./models/Chris/".
+        dump_name ([type], optional): The file name of the model once dumped. Defaults to datetime.now().strftime("%Y-%m-%d %H:%M:%S").
+        print_all (bool, optional): Whether or not to print all the results & metrics. Defaults to True.
+        print_matrix (bool, optional): Whether or not to print the confusion matrix. Defaults to True.
+        print_plot (bool, optional): Whether or not to print the ROC plot. Defaults to True.
+        print_dataframe (bool, optional): Whether or not to print the dataframe with the results from all models for all metrics. Defaults to True.
+
+    Raises:
+        Assertions: All parameters are asserted to the correct type and correct attributes.
+    
+    Returns:
+        estimator: The re-trained model, using the best params from the search space.
+    """
 
     # Imports
     from sklearn.model_selection import RandomizedSearchCV
@@ -964,7 +1010,7 @@ def easy_random_search     ( estimator
         , pred_val
         , pred_prob_val
         , dump_name
-        , print_all=print
+        , print_all=print_all
         , print_matrix=print_matrix
         , print_plot=print_plot
         , print_dataframe=print_dataframe
