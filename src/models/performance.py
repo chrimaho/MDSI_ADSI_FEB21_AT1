@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from datetime import datetime
 
 def print_reg_perf(y_preds, y_actuals, set_name=None):
     """
@@ -27,24 +28,6 @@ def print_reg_perf(y_preds, y_actuals, set_name=None):
     print("{name} RMSE: {score}".format(name=set_name, score=mse(y_actuals, y_preds, squared=False)))
     print("{name} MAE: {score}".format(name=set_name, score=mae(y_actuals, y_preds)))
     
-def save_reg_perf(pred, targ, data_reg_metrics=None, overwrite=True):
-    
-    if data_reg_metrics==None:
-        print("NaN")
-    """
-    Metrics:
-    - MSE
-    - RMSE
-    - MAE
-    - MAPE
-    - R2
-    - AR2
-    """
-    
-    # Return
-    return None
-
-
 def get_auc(targ:np.real, pred_prob:np.real):
     """
     Get the ROC AUC score from a given probability distribution.
@@ -79,6 +62,47 @@ def get_auc(targ:np.real, pred_prob:np.real):
     # Return
     return roc_auc
 
+def print_conf_matrix(targ:np.real, pred:np.real):
+    """
+    Print the Confusion Matrix for a given dataset
+
+    Args:
+        targ (np.real): The target values.
+        pred (np.real): The predicted values.
+
+    Raises:
+        Assertions: The input parameters are asserted to the correct type and attribute.
+
+    Returns:
+        None: Nothing is returned
+    """
+    
+    # Imports
+    import sys
+    import pandas as pd
+    import numpy as np
+    from sklearn.metrics import confusion_matrix as conf
+    from IPython.display import display
+    
+    # Assertions
+    assert np.all(np.isreal(targ))
+    assert np.all(np.isreal(pred))
+    
+    # Make data
+    data = pd.DataFrame \
+        ( conf(targ,pred)
+        , columns=pd.MultiIndex.from_tuples([("pred",0),("pred",1)])
+        , index=pd.MultiIndex.from_tuples([("targ",0),("targ",1)])
+        )
+        
+    # display() in Jupyter, print() otherwise.
+    if hasattr(sys, "ps1"):
+        display(data)
+    else:
+        print(data)
+        
+    # Nothing to return
+    return None
 
 def plot_roc_curve(targ:np.real, pred_prob:np.real):
     """
@@ -108,7 +132,7 @@ def plot_roc_curve(targ:np.real, pred_prob:np.real):
     # Generate plot
     plt.figure()
     lw=2
-    plt.plot(fpr, tpr, color="darkorange", lw=lw, label="ROC (AUC={:.3f}".format(roc_auc))
+    plt.plot(fpr, tpr, color="darkorange", lw=lw, label="ROC (AUC)={:.3f}".format(roc_auc))
     plt.plot([0,1], [0,1], color="navy", lw=lw, linestyle="--")
     plt.xlim([0.0,1.0])
     plt.ylim([0.0,1.05])
@@ -126,28 +150,28 @@ def save_reg_perf \
     ( targ:np.real
     , pred:np.real
     , pred_prob:np.real
-    , name:str=None
-    , df_metrics:pd.DataFrame=None
+    , df_metrics:pd.DataFrame
+    , name:str=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     , overwrite:bool=True
     , print_all:bool=True
     , print_matrix:bool=True
     , print_plot:bool=True
-    , print_dataframe:bool=True
+    , print_df:bool=True
     ):
     """
     Save model metrics to a dataframe.
 
     Args:
-        targ (np.real): The actual values. Can be scalar or arrya, but must be Real numbers.
-        pred (np.real): The prediction values. Can be scalar or array, but must be Real numbers. Must provide _either_ `pred` or `pred_probs`. Defaults to None.
-        pred_prob (np.real): The prediction probability values. Can be scalar or array, but must be Real numbers. Must provide _either_ `pred` or `pred_probs`. Defaults to None.
-        name (str, optional): The name of the data being calculated. If not given, will default to 'None'. Defaults to None.
-        df_metrics (pd.DataFrame, optional): The data frame to be updated to contain the data. If not given, will update the `pred_scor` dataframe from the global scope. Defaults to None.
-        overwrite (bool, optional): Whether or not to overwrite the data in the dataframe. In SQL-speak: True=UPDATE, False=INSERT. Defaults to True.
-        print_all (bool, optional): Wheather or not to turn off all printing. Defaults to True.
-        print_matrix (bool, optional): Whether or not to print the confusion matrix. Defaults to True.
-        print_plot (bool, optional): Whether or not to print the ROC plot. Defaults to True.
-        print_dataframe (bool, optional): Whether or not to print the final updated dataframe. Defaults to True.
+        targ (np.real)                : The actual values. Can be scalar or arrya, but must be Real numbers.
+        pred (np.real)                : The prediction values. Can be scalar or array, but must be Real numbers. Must provide _either_ `pred` or `pred_probs`. Defaults to None.
+        pred_prob (np.real)           : The prediction probability values. Can be scalar or array, but must be Real numbers. Must provide _either_ `pred` or `pred_probs`. Defaults to None.
+        df_metrics (pd.DataFrame)     : The data frame to be updated to contain the model metrics.
+        name (str, optional)          : The name of the data being calculated. If not given, will default to 'None'. Defaults to datetime.now().strftime("%Y-%m-%d %H:%M:%S").
+        overwrite (bool, optional)    : Whether or not to overwrite the data in the dataframe. In SQL-speak: True=UPDATE, False=INSERT. Defaults to True.
+        print_all (bool, optional)    : Wheather or not to turn off all printing. Defaults to True.
+        print_matrix (bool, optional) : Whether or not to print the confusion matrix. Defaults to True.
+        print_plot (bool, optional)   : Whether or not to print the ROC plot. Defaults to True.
+        print_df (bool, optional)     : Whether or not to print the final updated dataframe. Defaults to True.
 
     Raises:
         Assertions: Each parameter will be asserted to the proper type and attribute.
@@ -162,30 +186,23 @@ def save_reg_perf \
     from sklearn.metrics import confusion_matrix as conf
     from sklearn.metrics import roc_auc_score as roc_auc
     from sklearn.metrics import f1_score as f1
-    from sklearn.metrics import roc_curve, auc
+    from src.utils.misc import all_in
+    from IPython.display import display
+    from src.models.performance import print_conf_matrix, plot_roc_curve
 
     # Assertions
     assert np.all(np.isreal(targ))
     assert np.all(np.isreal(pred))
     assert np.all(np.isreal(pred_prob))
-    if not name==None:
-        assert np.isscalar(name)
-        assert isinstance(name, str)
-    if not df_metrics==None:
-        assert isinstance(df_metrics, pd.DataFrame)
-        assert df_metrics.columns == ["name","when","auc","sens","spec","f1"]
-    for parameter in [overwrite, print_matrix, print_plot, print_dataframe]:
+    assert np.isscalar(name)
+    assert isinstance(name, str)
+    assert isinstance(df_metrics, pd.DataFrame)
+    assert all_in(df_metrics.columns, ["name","when","auc","sens","spec","f1"])
+    for parameter in [overwrite, print_matrix, print_plot, print_df]:
         assert isinstance(parameter, bool)
 
-    # Ensure we're using the global object here
-    global pred_scor
-
-    # If you want to use another dataframe, go right ahead. Else, just keep it simple.
-    if df_metrics==None: df = pred_scor
-    else: df = df_metrics
-    
-    # Best to define name, but if blank then make None
-    if name==None: name=="None"
+    # Start your engines
+    df = df_metrics
 
     # Fix dimensions of the prob part
     if len(pred_prob.shape)>1:
@@ -194,7 +211,7 @@ def save_reg_perf \
     # Perform calculations
     val_now = pd.Timestamp.now().strftime('%d/%b %H:%M')
     val_auc = round(roc_auc(targ,pred_prob), 5)
-    fpr, tpr, thre = roc_curve(targ, pred_prob, pos_label=1)
+    # vau_auc = round(get_auc(targ,pred_prob), 5)
     tn, fp, fn, tp = conf(targ,pred).ravel()
     val_sens = round(tp/(tp+fn), 5)
     val_spec = round(tn/(tn+fp), 5)
@@ -223,22 +240,13 @@ def save_reg_perf \
     # Fix Pandas indexes
     df.reset_index(drop=True, inplace=True)
 
-    # Assign back to the global scope
-    pred_scor = df
-
     # Print if needed
     if print_all:
         if print_matrix:
-            display \
-                ( pd.DataFrame \
-                    ( conf(targ,pred)
-                    , columns=pd.MultiIndex.from_tuples([("pred",0),("pred",1)])
-                    , index=pd.MultiIndex.from_tuples([("targ",0),("targ",1)])
-                    )
-                )
+            print_conf_matrix(targ, pred)
         if print_plot:
             plot_roc_curve(targ, pred_prob)
-        if print_dataframe:
+        if print_df:
             display(df)
 
     # Return

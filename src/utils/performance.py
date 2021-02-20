@@ -10,4 +10,3 @@ class TicToc(TicToc):
         print('%s %s' % (msg, timedelta(seconds=round(self.elapsed))))
         if restart:
             self.start = default_timer()
-            
