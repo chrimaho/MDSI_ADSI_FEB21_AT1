@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "044bda3d32c7850d1eae0edc129b3409c7de4a2312d6813738b3903c366e9565"
+            "sha256": "1f0f47e3de5066546e70cc7889e671c3c73f4d3dacae11b09c935c5ff4c6d8ec"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -669,6 +669,14 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.8.1"
+        },
+        "pytictoc": {
+            "hashes": [
+                "sha256:3214dc7603095794178996c213ead519dd76107b353d5d0bc05a97d8af2774c3",
+                "sha256:8b48bb39e9625b879527c92d0fdbad0b28b16a918c2891ffee35f5eea4c21ec5"
+            ],
+            "index": "pypi",
+            "version": "==1.5.1"
         },
         "pytz": {
             "hashes": [

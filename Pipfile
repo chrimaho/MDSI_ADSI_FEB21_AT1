@@ -12,6 +12,7 @@ matplotlib = "*"
 joblib = "*"
 scipy = "*"
 xgboost = "*"
+pytictoc = "*"
 
 [dev-packages]
 
