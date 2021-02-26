@@ -11,7 +11,8 @@ def str_right(string:str, num_chars:int):
 def get_list_proportions(lst:list):
     """ Get the proportions of each occurance of a class from within a list """
     import numpy as np
-    assert isinstance(lst, (list, np.ndarray))
+    import pandas as pd
+    assert isinstance(lst, (list, np.ndarray, pd.Series))
     prop = {}
     dist = list(set(lst))
     for val in dist:
