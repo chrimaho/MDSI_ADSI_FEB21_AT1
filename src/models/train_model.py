@@ -16,7 +16,7 @@ def easy_random_search \
     , random_state:int=123
     , check_best_params:bool=True
     , dump_model:bool=True
-    , dump_location:str="./models/Chris/"
+    , dump_location:str="./models/"
     , dump_name:str=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     , print_all:bool=True
     , print_matrix:bool=True
@@ -52,11 +52,11 @@ def easy_random_search \
     """
 
     # Imports
-    from sklearn.model_selection import RandomizedSearchCV
+    from src.utils import assertions as a
     from src.utils.misc import all_in
     from src.utils.performance import TicToc
     from src.models.performance import save_reg_perf
-    import numpy as np
+    from sklearn.model_selection import RandomizedSearchCV
     from xgboost.sklearn import XGBModel
     from sklearn.metrics import make_scorer, roc_auc_score
     import os
@@ -68,30 +68,25 @@ def easy_random_search \
     # Assertions
     # assert "base_estimator" in estimator.__dict__.keys()
     # assert "sklearn" in estimator.__module__.split(".")[0]
-    assert isinstance(search_space, dict), \
-        "`search_space` must be type `dict`."
-    assert all_in(search_space.keys(), estimator.__dict__.keys()), \
-        "All keys in `search_space` must be valid parameters in `estimator`."
-    for param in ["feat_trn", "targ_trn", "feat_val", "targ_val"]:
-        assert isinstance(eval(param), np.ndarray), \
-            "`{param}` must be type `np.ndarray`."
-        assert np.all(np.isreal(eval(param))), \
-            "All elements of `{param}` must be Real numbers."
+    assert a.all_dict(search_space)
+    assert all_in(search_space.keys(), estimator.__dict__.keys())
+    assert a.all_dataframe_or_series_or_ndarray([feat_trn, targ_trn, feat_val, targ_val])
+    assert a.all_real([feat_trn, targ_trn, feat_val, targ_val])
     assert len(feat_trn)==len(targ_trn), \
         "Lengh of `feat_trn` must be same as `targ_trn`."
     assert len(feat_val)==len(targ_val), \
         "Length of `feat_val` must be same as `targ_val`."
     for param in ["n_iter", "cv", "random_state"]:
         assert isinstance(eval(param), int), \
-            "`{param}` must be type `int`."
+            "`{}` must be type `int`.".format(param)
         assert eval(param)>0, \
-            "`{param}` must be a positive integer."
+            "`{}` must be a positive integer.".format(param)
     for param in ["check_best_params", "dump_model", "print_all", "print_matrix", "print_plot", "print_df"]:
         assert isinstance(eval(param), bool), \
-            "`{param}` must be type `bool`."
+            "`{}` must be type `bool`.".format(param)
     for param in ["dump_location", "dump_name"]:
         assert isinstance(eval(param), str), \
-            "`{param}` must be type `str`."
+            "`{}` must be type `str`.".format(param)
     assert os.path.isdir(dump_location), \
         "`dump_location` must be a valid direcory."
 
