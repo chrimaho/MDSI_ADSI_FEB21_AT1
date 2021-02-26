@@ -165,3 +165,30 @@ def easy_random_search \
 
     # Return
     return estimator, df_metrics
+
+
+def fit_predict_print(classifier, name:str, feat_trn, targ_trn, feat_val, targ_val, print_roc:bool=True):
+    
+    # Imports
+    from src.utils import assertions as a
+    from sklearn.metrics import roc_auc_score
+
+    # Assertions
+    assert a.all_str(name)
+    assert a.all_dataframe_or_series_or_ndarray([feat_trn, targ_trn, feat_val, targ_val])
+    assert a.all_bool(print_roc)
+    
+    # Fit classifier
+    classifier.fit(feat_trn, targ_trn)
+    
+    # Get predictions
+    pred_trn = classifier.predict(feat_trn)
+    pred_val = classifier.predict(feat_val)
+    prob_val = classifier.predict_proba(feat_val)[:,1]
+    
+    # Get score
+    scor_auc = roc_auc_score(targ_val, prob_val)
+    if print_roc:
+        print("\nROC:\t", scor_auc, "\n")
+    
+    return pred_trn, pred_val, prob_val
