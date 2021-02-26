@@ -19,6 +19,21 @@ def all_int(lst):
         return isinstance(lst, int)
 
 
+def all_dict(lst):
+    if isinstance(lst, list):
+        return all([isinstance(element, dict) for element in lst])
+    else:
+        return isinstance(lst, dict)
+
+
+def all_real(lst):
+    import numpy as np
+    if isinstance(lst, list):
+        return np.all(np.isreal(lst))
+    else:
+        return np.isreal(lst)
+
+
 def all_dataframe(lst):
     import pandas as pd
     if isinstance(lst, list):
