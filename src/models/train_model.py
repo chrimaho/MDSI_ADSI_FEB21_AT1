@@ -76,17 +76,10 @@ def easy_random_search \
         "Lengh of `feat_trn` must be same as `targ_trn`."
     assert len(feat_val)==len(targ_val), \
         "Length of `feat_val` must be same as `targ_val`."
-    for param in ["n_iter", "cv", "random_state"]:
-        assert isinstance(eval(param), int), \
-            "`{}` must be type `int`.".format(param)
-        assert eval(param)>0, \
-            "`{}` must be a positive integer.".format(param)
-    for param in ["check_best_params", "dump_model", "print_all", "print_matrix", "print_plot", "print_df"]:
-        assert isinstance(eval(param), bool), \
-            "`{}` must be type `bool`.".format(param)
-    for param in ["dump_location", "dump_name"]:
-        assert isinstance(eval(param), str), \
-            "`{}` must be type `str`.".format(param)
+    assert a.all_int([n_iter, cv, random_state])
+    assert a.all_positive([n_iter, cv, random_state])
+    assert a.all_bool([check_best_params, dump_model, print_all, print_matrix, print_plot, print_df])
+    assert a.all_str([dump_location, dump_name])
     assert os.path.isdir(dump_location), \
         "`dump_location` must be a valid direcory."
 
@@ -136,7 +129,7 @@ def easy_random_search \
         , pred=pred_trn
         , pred_prob=pred_prob_trn
         , df_metrics=df_metrics
-        , name=dump_name+" - within bag"
+        , name=dump_name.replace("_"," - ")+" - within bag"
         , print_all=False
         , print_matrix=print_matrix
         , print_plot=print_plot
@@ -147,7 +140,7 @@ def easy_random_search \
         , pred=pred_val
         , pred_prob=pred_prob_val
         , df_metrics=df_metrics
-        , name=dump_name+" - out of bag"
+        , name=dump_name.replace("_"," - ")+" - out of bag"
         , print_all=print_all
         , print_matrix=print_matrix
         , print_plot=print_plot
