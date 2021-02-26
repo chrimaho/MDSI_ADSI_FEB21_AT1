@@ -239,3 +239,59 @@ def save_reg_perf \
 
     # Return
     return df
+
+def plot_confusion_matrix_roc(classifier, feat_trn, targ_trn, feat_val, targ_val):
+    
+    # Imports
+    from src.utils import assertions as a
+    from matplotlib import pyplot as plt
+    from sklearn.metrics import plot_confusion_matrix, plot_roc_curve
+    
+    # Assertions
+    assert a.all_dataframe_or_series_or_ndarray([feat_trn, targ_trn, feat_val, targ_val])
+    
+    # Set plot space
+    fig = plt.figure(figsize=(8,12), constrained_layout=True)
+    gs = fig.add_gridspec(3,2)
+    ax1 = fig.add_subplot(gs[0,0])
+    ax2 = fig.add_subplot(gs[0,1])
+    ax3 = fig.add_subplot(gs[1:3,:])
+    
+    # Plot first: conf matrix
+    ax1.title.set_text("Conf Mat - Training (norm)")
+    plot_confusion_matrix \
+        ( classifier
+        , feat_trn
+        , targ_trn
+        , cmap=plt.cm.Oranges
+        , colorbar=False
+        , normalize="true"
+        , ax=ax1
+        )
+    
+    # Plot second: conf matrix
+    ax2.title.set_text("Conf Mat - Validation (norm)")
+    plot_confusion_matrix \
+        ( classifier
+        , feat_val
+        , targ_val
+        , cmap=plt.cm.Blues
+        , colorbar=False
+        , normalize="true"
+        , ax=ax2
+        )
+        
+    # Plot third: ROC curve
+    ax3.title.set_text("Receiver Operating Characteristic")
+    plot_roc_curve \
+        ( classifier
+        , feat_val
+        , targ_val
+        , ax=ax3
+        )
+        
+    # Display
+    plt.show()
+    
+    # Return
+    return None
