@@ -4,10 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pandas = "==1.2.0"
-jupyterlab = "==3.0.5"
-scikit-learn = "==0.24.0"
-matplotlib = "==3.3.3"
+pandas = "*"
+numpy="*"
+jupyterlab = "*"
+sklearn = "*"
+matplotlib = "*"
+joblib = "*"
+scipy = "*"
+xgboost = "*"
 
 [dev-packages]
 
