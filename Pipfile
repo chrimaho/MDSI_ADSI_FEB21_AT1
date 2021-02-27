@@ -13,6 +13,7 @@ joblib = "*"
 scipy = "*"
 xgboost = "*"
 pytictoc = "*"
+lime = "*"
 
 [dev-packages]
 
