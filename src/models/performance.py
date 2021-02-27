@@ -283,6 +283,7 @@ def plot_confusion_matrix_roc(classifier, feat_trn, targ_trn, feat_val, targ_val
         
     # Plot third: ROC curve
     ax3.title.set_text("Receiver Operating Characteristic")
+    ax3.plot([0,1], [0,1], "r--")
     plot_roc_curve \
         ( classifier
         , feat_val
